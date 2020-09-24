@@ -77,17 +77,17 @@ void lancement(){
   move( 900, 300, bas, ANGLE_3, ANGLE_1, "whe");
   move( 1086, 1100, haut, ANGLE_1, ANGLE_2, "re");
   move( 0, 500, haut, ANGLE_2, ANGLE_3, "b");
-  move( 0, 450, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 450, bas,  ANGLE_3, ANGLE_2, "la");
   move( 0, 400, haut, ANGLE_2, ANGLE_3, "b");
-  move( 0, 350, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 350, bas,  ANGLE_3, ANGLE_2, "la");
   move( 0, 300, haut, ANGLE_2, ANGLE_3, "b");
-  move( 0, 250, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 250, bas,  ANGLE_3, ANGLE_2, "la");
   move( 0, 200, haut, ANGLE_2, ANGLE_3, "b");
-  move( 0, 150, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 150, bas,  ANGLE_3, ANGLE_2, "la");
   move( 0, 100, haut, ANGLE_2, ANGLE_3, "p");
-  move( 0, 100, haut, ANGLE_3, ANGLE_2, "ou");
+  move( 0, 100, bas,  ANGLE_3, ANGLE_2, "ou");
   move( 0, 100, haut, ANGLE_2, ANGLE_3, "k");
-  move( 0, 100, haut, ANGLE_3, ANGLE_2, "i");
+  move( 0, 100, bas,  ANGLE_3, ANGLE_2, "i");
 
 	DEBUG_FN_END
 }
@@ -108,8 +108,7 @@ void attente(){
 void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible, const char* texte)
 {
 	unsigned long time = millis();
-  int pos = angleDepart;
-	int ecartTotal = angleDepart - angleCible;
+	const int ecartTotal = angleDepart - angleCible;
 	const int precision = 100;
 	const int pas = ecartTotal / precision;
 	const int fractionDuDelay = incTime / precision;
