@@ -72,10 +72,22 @@ void lancement(){
   //TODO: décrire la séquence "somewhere over the rainbow"
 	ferme();
   
-  move( 500, 10, bas, ANGLE_3, ANGLE_2, "so"); // position ouvert so
-  move( 911, 15, haut, ANGLE_2, ANGLE_3, "me");
-  move( 900, 5, bas, ANGLE_3, ANGLE_1, "whe");
-  move( 1086, 45, bas, ANGLE_1, ANGLE_2, "re");
+  move( 500, 500, bas, ANGLE_3, ANGLE_2, "so"); // position ouvert so
+  move( 911, 500, haut, ANGLE_2, ANGLE_3, "me");
+  move( 900, 300, bas, ANGLE_3, ANGLE_1, "whe");
+  move( 1086, 1100, haut, ANGLE_1, ANGLE_2, "re");
+  move( 0, 500, haut, ANGLE_2, ANGLE_3, "b");
+  move( 0, 450, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 400, haut, ANGLE_2, ANGLE_3, "b");
+  move( 0, 350, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 300, haut, ANGLE_2, ANGLE_3, "b");
+  move( 0, 250, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 200, haut, ANGLE_2, ANGLE_3, "b");
+  move( 0, 150, haut, ANGLE_3, ANGLE_2, "la");
+  move( 0, 100, haut, ANGLE_2, ANGLE_3, "p");
+  move( 0, 100, haut, ANGLE_3, ANGLE_2, "ou");
+  move( 0, 100, haut, ANGLE_2, ANGLE_3, "k");
+  move( 0, 100, haut, ANGLE_3, ANGLE_2, "i");
 
 	DEBUG_FN_END
 }
@@ -95,25 +107,36 @@ void attente(){
 
 void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible, const char* texte)
 {
-  int pos = 0;
-  int increment = 1;       	//incrément entre chaque position
+	unsigned long time = millis();
+  int pos = angleDepart;
+	int ecartTotal = angleDepart - angleCible;
+	const int precision = 100;
+	const int pas = ecartTotal / precision;
+	const int fractionDuDelay = incTime / precision;
+
   delay(attente); 					//attente avant le mouvement
 	affichePosition(angleDepart);
   if(sens == bas)
   {  
-    for (pos =  angleDepart; pos >= angleCible; pos -= increment) {
-      myservo.write(pos);              
-      delay(incTime);   		//vitesse
+    for (int i=precision; i >= 0; i--) {
+      myservo.write(angleCible + (i * pas));              
+      delay(fractionDuDelay);   		//vitesse
+			Serial.print(".");
     }
   }
   else if(sens == haut){
-      for (pos =  angleDepart; pos <= angleCible; pos += increment) {
-        myservo.write(pos);              
-        delay(incTime);   	//vitesse
-      }
+		for (int i=0; i <= precision; i++) {
+			myservo.write(angleCible - (i * pas));              
+      delay(fractionDuDelay);   		//vitesse
+			Serial.print(".");
+		}
   }
+	time = (time - millis()) * -1;
 	affichePosition(angleCible);
-	Serial.println(texte);
+	Serial.print(texte);
+	Serial.print(" ");
+	Serial.print(time);
+	Serial.println("ms");
 }
 
 void affichePosition(int angle){
