@@ -7,8 +7,8 @@
 #define DEBUG
 #ifdef DEBUG
 #define DEBUG_FN(S) Serial.print(#S); Serial.println(__FUNCTION__);
-#define DEBUG_FN_START DEBUG_FN(->)
-#define DEBUG_FN_END   DEBUG_FN(<-)
+#define DEBUG_FN_START DEBUG_FN(=>)
+#define DEBUG_FN_END   DEBUG_FN(<=)
 #else
 #define DEBUG_FN(S)
 #define DEBUG_FN_START
@@ -37,11 +37,12 @@ Servo myservo;  // création de l'objet myservo
 
 //prototypes de fonctions
 inline int ecoute()  { return Serial.read(); }
-inline void ouvre()  { DEBUG_FN_START myservo.write(ANGLE_1); DEBUG_FN_END }// ouvre la bouche
-inline void miOuvre(){ DEBUG_FN_START myservo.write(ANGLE_2); DEBUG_FN_END }// entre-ouvre la bouche
-inline void ferme()  { DEBUG_FN_START myservo.write(ANGLE_3); DEBUG_FN_END }// ferme la bouche
+inline void ouvre()  { DEBUG_FN() myservo.write(ANGLE_1); }// ouvre la bouche
+inline void miOuvre(){ DEBUG_FN() myservo.write(ANGLE_2); }// entre-ouvre la bouche
+inline void ferme()  { DEBUG_FN() myservo.write(ANGLE_3); }// ferme la bouche
 void attente();
-void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible);
+void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible, const char* texte);
+void affichePosition(int angle);
 
 void setup() //initialisation
 {
@@ -69,18 +70,12 @@ void loop () //boucle principale
 void lancement(){
 	DEBUG_FN_START
   //TODO: décrire la séquence "somewhere over the rainbow"
-  myservo.write(ANGLE_3); // ferme la bouche
-  delay(500);
-  /*myservo.write(ANGLE_2);
-  delay(911);
-  myservo.write(ANGLE_3);
-  delay(379);
-  myservo.write(ANGLE_1);
-  delay(1086);*/
+	ferme();
   
-  move( 500, 50, bas, ANGLE_3, ANGLE_2); // position ouvert so
-  move( 911, 50, haut, ANGLE_2, ANGLE_3);// me
-  move( 1086, 50, bas, ANGLE_3, ANGLE_1);// whe
+  move( 500, 10, bas, ANGLE_3, ANGLE_2, "so"); // position ouvert so
+  move( 911, 15, haut, ANGLE_2, ANGLE_3, "me");
+  move( 900, 5, bas, ANGLE_3, ANGLE_1, "whe");
+  move( 1086, 45, bas, ANGLE_1, ANGLE_2, "re");
 
 	DEBUG_FN_END
 }
@@ -98,13 +93,12 @@ void attente(){
 	DEBUG_FN_END
 }
 
-
-
-void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible)
+void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible, const char* texte)
 {
   int pos = 0;
   int increment = 1;       	//incrément entre chaque position
   delay(attente); 					//attente avant le mouvement
+	affichePosition(angleDepart);
   if(sens == bas)
   {  
     for (pos =  angleDepart; pos >= angleCible; pos -= increment) {
@@ -118,4 +112,14 @@ void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angle
         delay(incTime);   	//vitesse
       }
   }
+	affichePosition(angleCible);
+	Serial.println(texte);
+}
+
+void affichePosition(int angle){
+	switch(angle){
+		case ANGLE_1: Serial.print("[ ");break;
+		case ANGLE_2: Serial.print("< ");break;
+		case ANGLE_3: Serial.print("- ");break;
+	}
 }
