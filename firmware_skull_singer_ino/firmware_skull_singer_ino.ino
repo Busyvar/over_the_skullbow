@@ -1,72 +1,60 @@
 #include <Servo.h>
-#define PIN_SERVO 6
 
+//defines et macros
+#define PIN_SERVO 6
+#define BAUD_RATE 9600
 //Commandes pour controler le depart et l'arret
 #define CMD_LANCEMENT '1'
 #define CMD_ARRET '0'
 #define CMD_ATTENTE '2'
+#define NO_CMD -1
 
 //angles possibles d'ouverture de la machoire
 #define ANGLE_1 0
 #define ANGLE_2 45
 #define ANGLE_3 90
 
+#define STEP(x) if(ecoute()!= NO_CMD){ return; }
+
+//definitions de structures et enumerations
 enum sens_e { haut = 0, bas = 1};
 
+//variables globales
 Servo myservo;  // création de l'objet myservo 
 
-
-int increment = 1;       //incrément entre chaque position
-
-#define STEP(x) if(ecoute()!= -1){ return; } \
-                valInst+=x; \
-                step (x);
-#define REINIT step(- valInst); /*reset position à l'origine*/
-
-char MSG = -1;
-
-void step(int s);
+//prototypes de fonctions
+inline int ecoute(){ return Serial.read(); }
 void attente();
 void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible);
-void setup()
+
+void setup() //initialisation
 {
-  Serial.begin(9600);
+  Serial.begin(BAUD_RATE);
   while(!Serial){;}
   myservo.attach(PIN_SERVO);  // attache le servo au pin spécifié sur l'objet myservo
-  //myservo.write(ANGLE_3);  
 }
 
-void loop ()
+void loop () //boucle principale
 {
-  int valInst = 0;
-  REINIT
+  char MSG = ecoute();
   switch(MSG)
   {
-    case CMD_ARRET:{
-      Serial.println("Stopping");// arret();
-      break;
-    }
-    case CMD_LANCEMENT:{ lancement();
-    break;
-    }
-    case CMD_ATTENTE:{// attente();
-    break;
-    }
+    case CMD_ARRET:{ arret(); break; }
+    case CMD_LANCEMENT:{ lancement(); break; }
+    case CMD_ATTENTE:{ attente(); break; }
+    case NO_CMD:{ 
+      Serial.println("NO CMD");
+	  break;
+	}
     default:
     {
-      Serial.println("NO CMD");
-      ecoute();
+      Serial.println("UNKNOWN CMD");
       break;
     }
   }
+  ecoute();
   
   delay(200);
-}
-
-void step(int s)
-{
-  //Serial.println(__FUNCTION__);
-
 }
 
 void arret(){
@@ -77,7 +65,8 @@ void arret(){
 
 void attente(){
   Serial.println(__FUNCTION__);
-   myservo.write(ANGLE_2);
+   //myservo.write(ANGLE_2);
+   delay(5000);
 }
 
 void lancement(){
@@ -96,19 +85,13 @@ void lancement(){
   move( 911, 50, haut, ANGLE_2, ANGLE_3);// me
   move( 1086, 50, bas, ANGLE_3, ANGLE_1);// whe
 
-  ecoute();
-  return;      
 }
 
-int ecoute(){
-  MSG = Serial.read();
-  Serial.println(int (MSG));
-  return MSG;
-}
 
 void move( int attente, int incTime, enum sens_e sens,int angleDepart, int angleCible)
 {
   int pos = 0;
+  int increment = 1;       //incrément entre chaque position
   delay(attente);
   if(sens == bas)
   {  
