@@ -8,59 +8,47 @@ inline int ecoute()  { return Serial.read(); }
 inline void ouvre()  { DEBUG_FN() myservo.write(ANGLE_1); }// ouvre la bouche
 inline void miOuvre(){ DEBUG_FN() myservo.write(ANGLE_2); }// entre-ouvre la bouche
 inline void ferme()  { DEBUG_FN() myservo.write(ANGLE_3); }// ferme la bouche
+inline void activeMoteur(){ myservo.attach(PIN_SERVO);}
+inline void coupeMoteur(){ myservo.detach();}
 
 void SkullInit(){
   Serial.begin(BAUD_RATE);
   while(!Serial){;}
-  myservo.attach(PIN_SERVO);  // attache le servo au pin spécifié sur l'objet myservo
 }
 
-void move( int incTime, int angleDepart, int angleCible, const char* texte)
+
+void move( int incTime, const int angleCible, const char* texte)
 {
-	unsigned long time = millis();
-	const int ecartTotal = angleDepart - angleCible;
-	const int precision = 24;
-	const int pas = ecartTotal / precision; // 0-90/100
-	const int fractionDuDelay = incTime / precision;
-        enum sens_e sens = (ecartTotal > 0 )? bas : haut;
-      Serial.print("anglDepart:");
-      Serial.println(angleDepart);
-      Serial.print("angleCible:");
-      Serial.println(angleCible);
-	affichePosition(angleDepart);
-  if(sens == bas)
-  {  
-    for (int i=precision; i >= 0; i--) {
-      Serial.print("position:");
-      Serial.println((angleCible + (i * pas)));
+  static int positionPrecedente = ANGLE_3;
+  const int ecartTotal = positionPrecedente - angleCible;
+  const int precision = PRECISION;
+  const int pas = ecartTotal / precision; // 0-90/100
+  const float fractionDuDelay = incTime / precision;
+  unsigned long time = millis();
+  
+  Serial.print(positionPrecedente);
+  Serial.print(" vers ");
+  Serial.println(angleCible);
+  Serial.println(pas);
+  affichePosition(positionPrecedente);
 
-      myservo.write(angleCible + (i * pas));              
-      delay(fractionDuDelay);	//vitesse
-	//Serial.print(".");
-    }
-    
-    /*
-    délai / 100
-    mouvement / 100
-    andleDepart(90) -> (0..100/100)ecart -> angleCible(0)
-    */
+  for (int i=positionPrecedente; i != angleCible; i -= pas) {
+    Serial.print("position:");
+    Serial.println(i);
+    myservo.write(i);
+    delay(fractionDuDelay);//vitesse
   }
-  else if(sens == haut){
-    for (int i=0; i <= precision; i++) {
-      Serial.print("position:");
-      Serial.println((angleCible - (i * pas)));
-      myservo.write(angleCible - (i * pas));
-      delay(fractionDuDelay);   		//vitesse
-      //Serial.print(".");
-    }
-  }
-	time = (time - millis()) * -1;
-	affichePosition(angleCible);
-	Serial.print(texte);
-	Serial.print(" ");
-	Serial.print(time);
-	Serial.println("ms");
+  myservo.write(angleCible);
+
+  positionPrecedente = angleCible;
+  time = (time - millis()) * -1;
+  affichePosition(angleCible);
+  Serial.print(texte);
+  Serial.print(" ");
+  Serial.print(time);
+  Serial.println("ms");
 }
+
 
 void affichePosition(int angle){
 	switch(angle){

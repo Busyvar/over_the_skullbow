@@ -24,8 +24,16 @@
 
 //angles possibles d'ouverture de la machoire
 #define ANGLE_1 0
-#define ANGLE_2 45
-#define ANGLE_3 90
+#define ANGLE_2 40
+#define ANGLE_3 80
+
+#define PRECISION 20
+#define A1A3 ANGLE_1 - ANGLE_3
+#define A3A1 ANGLE_3 - ANGLE_1
+#define A1A2 ANGLE_1 - ANGLE_2
+#define A2A1 ANGLE_2 - ANGLE_1
+#define A2A3 ANGLE_2 - ANGLE_3
+#define A3A2 ANGLE_3 - ANGLE_2
 
 #define PIN_SERVO 6
 #define BAUD_RATE 9600
@@ -39,6 +47,8 @@ int ecoute()  ;
 void ouvre()  ;// ouvre la bouche
 void miOuvre();// entre-ouvre la bouche
 void ferme()  ;// ferme la bouche
-void move( int incTime, int angleDepart, int angleCible, const char* texte);
+void move( int incTime, const int angleCible, const char* texte);
+void activeMoteur();
+void coupeMoteur();
 
 #endif
