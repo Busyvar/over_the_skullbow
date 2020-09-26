@@ -15,7 +15,7 @@ void SkullInit(){
   myservo.attach(PIN_SERVO);  // attache le servo au pin spécifié sur l'objet myservo
 }
 
-void move( int attente, int incTime, int angleDepart, int angleCible, const char* texte)
+void move( int incTime, int angleDepart, int angleCible, const char* texte)
 {
 	unsigned long time = millis();
 	const int ecartTotal = angleDepart - angleCible;
@@ -27,7 +27,6 @@ void move( int attente, int incTime, int angleDepart, int angleCible, const char
       Serial.println(angleDepart);
       Serial.print("angleCible:");
       Serial.println(angleCible);
-  delay(attente); 					//attente avant le mouvement
 	affichePosition(angleDepart);
   if(sens == bas)
   {  

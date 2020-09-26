@@ -5,7 +5,6 @@ void lancement();
 void arret();
 void attente();
 
-void lancement();
 void setup() //initialisation
 {
 	SkullInit();
@@ -74,25 +73,49 @@ M 2452 can
 O 3120 ’t iiiiii
 F 2920 iiiiiii
 Attente 192273 millisecondes */
-	
   delay ( 235 );
-  move( 0, 911,        ANGLE_3, ANGLE_2, "so"); // position ouvert so
-  move( 0, 379,       ANGLE_2, ANGLE_3, "me");
-  move( 900, 300,       ANGLE_3, ANGLE_1, "whe");
-  move( 1086, 1100,     ANGLE_1, ANGLE_2, "re");
-  move( 0, 500,         ANGLE_2, ANGLE_3, "b");
-  move( 0, 450,         ANGLE_3, ANGLE_2, "la");
-  move( 0, 400,         ANGLE_2, ANGLE_3, "b");
-  move( 0, 350,         ANGLE_3, ANGLE_2, "la");
-  move( 0, 300,         ANGLE_2, ANGLE_3, "b");
-  move( 0, 250,         ANGLE_3, ANGLE_2, "la");
-  move( 0, 200,         ANGLE_2, ANGLE_3, "b");
-  move( 0, 150,         ANGLE_3, ANGLE_2, "la");
-  move( 0, 100,         ANGLE_2, ANGLE_3, "p");
-  move( 0, 100,         ANGLE_3, ANGLE_2, "ou");
-  move( 0, 100,         ANGLE_2, ANGLE_3, "k");
-  move( 0, 100,         ANGLE_3, ANGLE_2, "i");
-
+  move( 911,        ANGLE_3, ANGLE_1, "so"); // O
+  move( 379,       ANGLE_1, ANGLE_3, "me"); // F
+  move( 1086,       ANGLE_3, ANGLE_1, "whe"); //O
+  move( 578,     ANGLE_1, ANGLE_3, "re"); //F
+  move( 390,         ANGLE_3, ANGLE_1, "o"); //O
+  move( 312,         ANGLE_1, ANGLE_2, "ver"); //M
+  move( 575,         ANGLE_2, ANGLE_1, "the rai"); //O
+  move( 403,         ANGLE_1, ANGLE_2, "ain"); //M
+  move( 1162,         ANGLE_2, ANGLE_1, "bow"); //O
+  move( 357,         ANGLE_1, ANGLE_3, "respiration"); //F
+  move( 753,         ANGLE_3, ANGLE_2, "blue"); //M
+  move( 864,         ANGLE_2, ANGLE_1, "bir"); //O
+  move( 659,         ANGLE_1, ANGLE_3, "ds"); //F
+  move( 1086,         ANGLE_3, ANGLE_1, "fl"); //O
+  move( 1986,         ANGLE_1, ANGLE_3, "ly"); //F
+  move( 1005,         ANGLE_3, ANGLE_2, "birds"); //M
+  move( 794,        ANGLE_2, ANGLE_1, "fl"); //O
+  move( 665,       ANGLE_1, ANGLE_2, "ly"); //M
+  move( 426,       ANGLE_2, ANGLE_1, "o"); //O
+  move( 412,     ANGLE_1, ANGLE_3, "ver"); //F
+  move( 785,         ANGLE_3, ANGLE_2, "the rai"); //M
+  move( 493,         ANGLE_2, ANGLE_1, "ai"); //O
+  move( 469,         ANGLE_1, ANGLE_3, "n"); //F
+  move( 321,         ANGLE_3, ANGLE_1, "bo"); //O
+  move( 971,         ANGLE_1, ANGLE_3, "ow"); //F
+  move( 1580,         ANGLE_3, ANGLE_1, "wh"); //O
+  move( 1516,         ANGLE_1, ANGLE_3, "hy"); //F
+  move( 591,         ANGLE_3, ANGLE_2, "oh"); //M
+  move( 780,         ANGLE_2, ANGLE_1, "wh"); //O
+  move( 747,         ANGLE_1, ANGLE_3, "hy"); //F
+  move( 852,         ANGLE_3, ANGLE_1, "can"); //O
+  move( 814,         ANGLE_1, ANGLE_3, "ant"); //F
+  move( 1159,        ANGLE_3, ANGLE_1, "t i"); //O
+  move( 1159,       ANGLE_1, ANGLE_3, "iii"); //F
+  move( 947,       ANGLE_3, ANGLE_1, "why"); //O
+  move( 892,     ANGLE_1, ANGLE_2, "oh"); //M
+  move( 580,         ANGLE_2, ANGLE_1, "wh"); //O
+  move( 981,         ANGLE_1, ANGLE_3, "hy"); //F
+  move( 2452,         ANGLE_3, ANGLE_2, "can"); //M
+  move( 3120,         ANGLE_2, ANGLE_1, "t iiiii"); //O
+  move( 2920,         ANGLE_1, ANGLE_3, "iiiiiiii"); //F
+  //delay (192273 ) ; //ATTENTE 3 MIN
 	DEBUG_FN_END
 }
 

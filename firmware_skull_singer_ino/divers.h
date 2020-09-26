@@ -39,7 +39,6 @@ int ecoute()  ;
 void ouvre()  ;// ouvre la bouche
 void miOuvre();// entre-ouvre la bouche
 void ferme()  ;// ferme la bouche
-void attente();// attends 5 secondes
-void move( int attente, int incTime, int angleDepart, int angleCible, const char* texte);
+void move( int incTime, int angleDepart, int angleCible, const char* texte);
 
 #endif
