@@ -26,15 +26,15 @@ void move( int incTime, const int angleCible, const char* texte)
   const float fractionDuDelay = incTime / precision;
   unsigned long time = millis();
   
-  Serial.print(positionPrecedente);
-  Serial.print(" vers ");
-  Serial.println(angleCible);
-  Serial.println(pas);
-  affichePosition(positionPrecedente);
+  //Serial.print(positionPrecedente);
+  //Serial.print(" vers ");
+  //Serial.println(angleCible);
+  //Serial.println(pas);
+  //affichePosition(positionPrecedente);
 
   for (int i=positionPrecedente; i != angleCible; i -= pas) {
-    Serial.print("position:");
-    Serial.println(i);
+    //Serial.print("position:");
+    //Serial.println(i);
     myservo.write(i);
     delay(fractionDuDelay);//vitesse
   }
@@ -42,11 +42,11 @@ void move( int incTime, const int angleCible, const char* texte)
 
   positionPrecedente = angleCible;
   time = (time - millis()) * -1;
-  affichePosition(angleCible);
-  Serial.print(texte);
-  Serial.print(" ");
-  Serial.print(time);
-  Serial.println("ms");
+  //affichePosition(angleCible);
+  //Serial.print(texte);
+  //Serial.print(" ");
+  //Serial.print(time);
+  //Serial.println("ms");
 }
 
 

@@ -2,7 +2,7 @@
 #define divers_h
 
 //defines et macros
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #define DEBUG_FN(S) Serial.print(#S); Serial.println(__FUNCTION__);
 #define DEBUG_FN_START DEBUG_FN(=>)
